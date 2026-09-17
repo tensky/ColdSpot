@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coldspot_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/coldspot_surface"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/coldspot_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="56dp"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="4dp">
+
+        <TextView
+            android:id="@+id/coldspot_title"
+            style="@style/coldspot_Text.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/coldspot_name" />
+
+        <ProgressBar
+            android:id="@+id/coldspot_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="12dp"
+            android:contentDescription="@string/coldspot_loading"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/coldspot_refresh"
+            style="@style/coldspot_IconButton"
+            android:contentDescription="@string/coldspot_refresh"
+            android:src="@drawable/coldspot_ic_refresh" />
+
+        <ImageButton
+            android:id="@+id/coldspot_share"
+            style="@style/coldspot_IconButton"
+            android:contentDescription="@string/coldspot_share"
+            android:src="@drawable/coldspot_ic_share" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/coldspot_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/coldspot_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/coldspot_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/coldspot_loading" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

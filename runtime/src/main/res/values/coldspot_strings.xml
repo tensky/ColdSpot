@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="coldspot_name">ColdSpot</string>
+    <string name="coldspot_open">Open ColdSpot</string>
+    <string name="coldspot_hide_until_restart">Hide until restart</string>
+
+    <!-- The overview. The copy says "executed", never "tested". -->
+    <string name="coldspot_loading">Analysing…</string>
+    <string name="coldspot_refresh">Refresh</string>
+    <string name="coldspot_share">Share summary</string>
+    <string name="coldspot_share_subject">ColdSpot summary</string>
+    <string name="coldspot_base">Base</string>
+    <string name="coldspot_head">Head</string>
+    <string name="coldspot_installed">Installed</string>
+    <string name="coldspot_since">Collecting since</string>
+    <string name="coldspot_since_never">nothing collected yet</string>
+    <string name="coldspot_uncommitted">Uncommitted changes were part of this build: it is not what the head commit holds.</string>
+    <string name="coldspot_expanded">%1$s, expanded</string>
+    <string name="coldspot_collapsed">%1$s, collapsed</string>
+    <string name="coldspot_show_bubble">Show bubble</string>
+    <string name="coldspot_show_bubble_hint">The floating button that opens ColdSpot from the app. Hidden, it comes back with the next build you install.</string>
+    <string name="coldspot_reset">Reset</string>
+    <string name="coldspot_reset_coverage">Reset coverage…</string>
+    <string name="coldspot_reset_title">Reset coverage?</string>
+    <string name="coldspot_reset_message">This deletes the saved coverage and clears what this launch has executed so far. Collecting starts again from now.</string>
+    <string name="coldspot_cancel">Cancel</string>
+    <string name="coldspot_version">ColdSpot %1$s</string>
+
+    <!-- A file. -->
+    <string name="coldspot_back">Back</string>
+    <string name="coldspot_legend">What the markers mean</string>
+    <string name="coldspot_tap_a_line">Tap a changed line to see what it did.</string>
+    <string name="coldspot_line_explained">Line %1$d: %2$s</string>
+    <string name="coldspot_file_gone">%1$s is not among the changed files of this build any more.</string>
+    <string name="coldspot_file_failed">ColdSpot cannot show this file: %1$s</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coldspot_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/coldspot_surface"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/coldspot_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="56dp"
+        android:orientation="horizontal"
+        android:paddingStart="4dp"
+        android:paddingEnd="16dp">
+
+        <ImageButton
+            android:id="@+id/coldspot_back"
+            style="@style/coldspot_IconButton"
+            android:contentDescription="@string/coldspot_back"
+            android:src="@drawable/coldspot_ic_back" />
+
+        <TextView
+            android:id="@+id/coldspot_title"
+            style="@style/coldspot_Text.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:ellipsize="middle"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/coldspot_lines"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null" />
+
+    <TextView
+        android:id="@+id/coldspot_explanation"
+        style="@style/coldspot_Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:accessibilityLiveRegion="polite"
+        android:background="@color/coldspot_surface_high"
+        android:gravity="center_vertical"
+        android:minHeight="56dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:text="@string/coldspot_tap_a_line" />
+</LinearLayout>

@@ -1,0 +1,23 @@
+*.iml
+.gradle
+/local.properties
+# Android Studio: only what is worth sharing is kept (the inspection profile, the run-configuration settings, the VCS
+# mapping). The rest of .idea is this machine's state, which the IDE rewrites and recreates on its own: the selected
+# device, the JDK, what the last Gradle sync found, caches, and whatever files later versions add.
+/.idea/*
+!/.idea/.gitignore
+!/.idea/inspectionProfiles/
+!/.idea/runConfigurations.xml
+!/.idea/vcs.xml
+.DS_Store
+/build
+# the tooling build's own output when it is built on its own (Gradle's problems report); its modules ignore theirs
+/tooling/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+scratch/
+.kotlin/
+# the maintainer's release checks, and the scratch emulators they make (gigabytes): on the maintainer's machine only
+/testbeds/

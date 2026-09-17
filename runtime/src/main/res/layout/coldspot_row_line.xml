@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A line of code, at code density: no minimum height. The marker and the number sit on the first line of the text,
+     the number on its baseline, when a long line wraps. The whole row takes the tap (the list's item click). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/coldspot_line_selected"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@color/coldspot_on_surface" />
+
+    <ImageView
+        android:id="@+id/coldspot_line_marker"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="2dp" />
+
+    <TextView
+        android:id="@+id/coldspot_line_number"
+        style="@style/coldspot_Text.Mono.Dim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:paddingStart="8dp"
+        android:paddingEnd="0dp" />
+
+    <TextView
+        android:id="@+id/coldspot_line_text"
+        style="@style/coldspot_Text.Mono"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="10dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="2dp"
+        android:textDirection="ltr" />
+</LinearLayout>

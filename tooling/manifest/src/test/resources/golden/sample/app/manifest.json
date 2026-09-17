@@ -1,0 +1,72 @@
+{
+    "schemaVersion": 8,
+    "module": "app",
+    "files": [
+        {
+            "path": "app/src/coverage/kotlin/id/tensky/coldspot/CoverageDebug.kt",
+            "classes": [
+                "id/tensky/coldspot/CoverageDebug"
+            ],
+            "blindLines": [],
+            "previews": []
+        },
+        {
+            "path": "app/src/main/java/id/tensky/coldspot/ColdSpotApp.kt",
+            "classes": [
+                "id/tensky/coldspot/ColdSpotApp"
+            ],
+            "blindLines": [],
+            "previews": []
+        },
+        {
+            "path": "app/src/main/java/id/tensky/coldspot/MainActivity.kt",
+            "classes": [
+                "id/tensky/coldspot/ComposableSingletons$MainActivityKt",
+                "id/tensky/coldspot/GreetingNames",
+                "id/tensky/coldspot/MainActivity",
+                "id/tensky/coldspot/MainActivityKt"
+            ],
+            "blindLines": [],
+            "previews": [
+                {
+                    "lines": [
+                        71,
+                        73
+                    ],
+                    "reason": "@Preview on GreetingPreview"
+                },
+                {
+                    "lines": [
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ],
+                    "reason": "@ThemePreviews on GreetingThemePreview (@Preview via @ThemePreviews)"
+                },
+                {
+                    "lines": [
+                        85,
+                        86
+                    ],
+                    "reason": "GreetingNames implements PreviewParameterProvider"
+                },
+                {
+                    "lines": [
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95
+                    ],
+                    "reason": "@Preview on GreetingNamesPreview"
+                }
+            ]
+        }
+    ]
+}

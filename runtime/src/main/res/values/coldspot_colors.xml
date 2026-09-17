@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The screens' accents, one for each theme. -->
+    <color name="coldspot_ink">#0B2545</color>
+    <color name="coldspot_ice">#8FD3FF</color>
+    <!--
+        The launcher icon's ground and the bubble's disc, from the logo (A3): only here, so that no night theme changes
+        them. The disc is white with a light rim, as the logo draws it at 48 dp; its shadow sets it off a white screen.
+    -->
+    <color name="coldspot_launcher_background">#0E1B26</color>
+    <color name="coldspot_bubble">#FFFFFF</color>
+    <color name="coldspot_bubble_rim">#D5DDE3</color>
+    <color name="coldspot_bubble_ripple">#668FD3FF</color>
+
+    <!-- The screens, light. Every foreground here has a contrast of 4.5 to 1 or more on the surface and on its own tint. -->
+    <color name="coldspot_surface">#FFFFFF</color>
+    <color name="coldspot_surface_high">#F1F3F4</color>
+    <color name="coldspot_on_surface">#202124</color>
+    <color name="coldspot_on_surface_dim">#5F6368</color>
+    <color name="coldspot_outline">#DADCE0</color>
+    <color name="coldspot_executed">#137333</color>
+    <color name="coldspot_partial">#9A5200</color>
+    <color name="coldspot_not_executed">#C5221F</color>
+    <color name="coldspot_neutral">#5F6368</color>
+    <color name="coldspot_error">#7B1FA2</color>
+    <color name="coldspot_executed_background">#E6F4EA</color>
+    <color name="coldspot_partial_background">#FEF3D6</color>
+    <color name="coldspot_not_executed_background">#FCE8E6</color>
+    <color name="coldspot_neutral_background">#F1F3F4</color>
+    <color name="coldspot_error_background">#F3E5F5</color>
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <!-- Startup: the provider runs before Application.onCreate and registers the listeners; nothing else. -->
+        <provider
+            android:name="id.tensky.coldspot.runtime.ColdSpotProvider"
+            android:authorities="${applicationId}.coldspot"
+            android:exported="false"
+            android:initOrder="-1000" />
+
+        <!-- ColdSpot's screens. Reached from the bubble and ColdSpot.open(context) inside the app; never exported themselves. -->
+        <activity
+            android:name="id.tensky.coldspot.runtime.ColdSpotActivity"
+            android:exported="false"
+            android:icon="@mipmap/coldspot_launcher"
+            android:label="@string/coldspot_name"
+            android:launchMode="singleTop"
+            android:taskAffinity="${applicationId}.coldspot"
+            android:theme="@style/coldspot_Theme" />
+        <activity
+            android:name="id.tensky.coldspot.runtime.ColdSpotFileActivity"
+            android:exported="false"
+            android:label="@string/coldspot_name"
+            android:taskAffinity="${applicationId}.coldspot"
+            android:theme="@style/coldspot_Theme" />
+
+        <!-- The launcher icon: there or not by a resource the build decides, see res/values/coldspot_config.xml. -->
+        <activity-alias
+            android:name="id.tensky.coldspot.runtime.ColdSpotLauncher"
+            android:enabled="@bool/coldspot_launcher_icon"
+            android:exported="true"
+            android:icon="@mipmap/coldspot_launcher"
+            android:label="@string/coldspot_name"
+            android:targetActivity="id.tensky.coldspot.runtime.ColdSpotActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- For scripts, from `adb shell am broadcast`: guarded by a permission the shell holds and no app can obtain. -->
+        <receiver
+            android:name="id.tensky.coldspot.runtime.ColdSpotResetReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="${applicationId}.coldspot.RESET" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="id.tensky.coldspot.runtime.ColdSpotDumpReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="${applicationId}.coldspot.DUMP" />
+            </intent-filter>
+        </receiver>
+        <!-- For UI automation: the bubble out of the way, and back. -->
+        <receiver
+            android:name="id.tensky.coldspot.runtime.ColdSpotBubbleReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="${applicationId}.coldspot.HIDE_BUBBLE" />
+                <action android:name="${applicationId}.coldspot.SHOW_BUBBLE" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

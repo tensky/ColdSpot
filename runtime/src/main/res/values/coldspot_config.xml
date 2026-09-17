@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      The entry points as the build decides them. These are the defaults (DECISIONS.md "Entry points"); ColdSpot's
+      plugin writes coldSpot { bubble; launcherIcon } over them, as resources of the app's coverage variant, and an
+      app may do the same in its own res/. Without either, the library is complete as it is.
+    -->
+    <bool name="coldspot_bubble">true</bool>
+    <bool name="coldspot_launcher_icon">false</bool>
+</resources>

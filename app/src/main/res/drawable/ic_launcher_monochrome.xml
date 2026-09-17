@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    A copy of the runtime's coldspot_launcher_monochrome, for the sample app's own icon.
+    The launcher icon's monochrome layer, for themed icons (Android 13 and up), which tint it by its alpha: the ice as
+    an outline, the beetle as a silhouette with its eye cut out (coldspot_launcher_monochrome.svg). Same geometry as
+    the foreground. The SVG cuts its holes with the even-odd rule; here each hole is its outline drawn the other way
+    round, which cuts the same hole with the default rule and needs no API 24 fillType.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.33479"
+        android:scaleY="0.33479"
+        android:translateX="20.542"
+        android:translateY="20.542">
+        <group
+            android:pivotX="100"
+            android:pivotY="100"
+            android:rotation="-8">
+            <!-- the ice, an outline: its edge with its face cut out -->
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M60,30 H140 A30,30 0 0,1 170,60 V140 A30,30 0 0,1 140,170 H60 A30,30 0 0,1 30,140 V60 A30,30 0 0,1 60,30 Z M60,38 A20,20 0 0,0 40,58 V132 A20,20 0 0,0 60,152 H136 A20,20 0 0,0 156,132 V58 A20,20 0 0,0 136,38 Z" />
+            <group
+                android:rotation="-4"
+                android:scaleX="0.95"
+                android:scaleY="0.95"
+                android:translateX="88"
+                android:translateY="104">
+                <!-- the legs -->
+                <path
+                    android:pathData="M-20,12 L-25,28 M0,14 L0,30 M20,12 L25,28"
+                    android:strokeColor="#FFFFFF"
+                    android:strokeLineCap="round"
+                    android:strokeWidth="10" />
+                <!-- the shell -->
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:pathData="M-38,16 C-38,-16 -18,-32 2,-32 C24,-32 40,-14 40,12 L40,16 Z" />
+                <!-- the head, with the eye cut out -->
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:pathData="M31,6 A15,15 0 1,1 61,6 A15,15 0 1,1 31,6 Z M40.5,2 A9.5,9.5 0 1,0 59.5,2 A9.5,9.5 0 1,0 40.5,2 Z" />
+                <!-- the antenna, and its tip -->
+                <path
+                    android:pathData="M46,-8 Q50,-22 60,-26"
+                    android:strokeColor="#FFFFFF"
+                    android:strokeLineCap="round"
+                    android:strokeWidth="7" />
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:pathData="M55,-26 A6,6 0 1,1 67,-26 A6,6 0 1,1 55,-26 Z" />
+                <!-- the pupil, inside the cut-out eye -->
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:pathData="M47.2,-1 A4.8,4.8 0 1,1 56.8,-1 A4.8,4.8 0 1,1 47.2,-1 Z" />
+            </group>
+        </group>
+    </group>
+</vector>

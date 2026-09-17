@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    A copy of the runtime's coldspot_launcher_foreground, for the sample app's own icon.
+    The launcher icon's foreground: the beetle frozen mid-step in a tilted ice cube, the logo's small mark (A3,
+    coldspot_launcher_foreground.svg), within the adaptive icon's 66 dp safe zone. The groups are the SVG's transforms:
+    into the 108 dp layer, the cube's tilt about its centre, the beetle's own step.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.33479"
+        android:scaleY="0.33479"
+        android:translateX="20.542"
+        android:translateY="20.542">
+        <group
+            android:pivotX="100"
+            android:pivotY="100"
+            android:rotation="-8">
+            <!-- the ice: its edge, then its face -->
+            <path
+                android:fillColor="#5DB6E3"
+                android:pathData="M60,30 H140 A30,30 0 0,1 170,60 V140 A30,30 0 0,1 140,170 H60 A30,30 0 0,1 30,140 V60 A30,30 0 0,1 60,30 Z" />
+            <path
+                android:fillColor="#D6F1FC"
+                android:pathData="M58,32 H138 A22,22 0 0,1 160,54 V134 A22,22 0 0,1 138,156 H58 A22,22 0 0,1 36,134 V54 A22,22 0 0,1 58,32 Z" />
+            <group
+                android:rotation="-4"
+                android:scaleX="0.95"
+                android:scaleY="0.95"
+                android:translateX="88"
+                android:translateY="104">
+                <!-- the legs -->
+                <path
+                    android:pathData="M-20,12 L-25,28 M0,14 L0,30 M20,12 L25,28"
+                    android:strokeColor="#1C2B45"
+                    android:strokeLineCap="round"
+                    android:strokeWidth="10" />
+                <!-- the shell -->
+                <path
+                    android:fillColor="#1C2B45"
+                    android:pathData="M-38,16 C-38,-16 -18,-32 2,-32 C24,-32 40,-14 40,12 L40,16 Z" />
+                <!-- the head -->
+                <path
+                    android:fillColor="#1C2B45"
+                    android:pathData="M31,6 A15,15 0 1,1 61,6 A15,15 0 1,1 31,6 Z" />
+                <!-- the antenna, and its tip -->
+                <path
+                    android:pathData="M46,-8 Q50,-22 60,-26"
+                    android:strokeColor="#1C2B45"
+                    android:strokeLineCap="round"
+                    android:strokeWidth="7" />
+                <path
+                    android:fillColor="#1C2B45"
+                    android:pathData="M55,-26 A6,6 0 1,1 67,-26 A6,6 0 1,1 55,-26 Z" />
+                <!-- the startled eye -->
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:pathData="M40.5,2 A9.5,9.5 0 1,1 59.5,2 A9.5,9.5 0 1,1 40.5,2 Z" />
+                <path
+                    android:fillColor="#1C2B45"
+                    android:pathData="M47.2,-1 A4.8,4.8 0 1,1 56.8,-1 A4.8,4.8 0 1,1 47.2,-1 Z" />
+            </group>
+            <!-- the glint on the ice -->
+            <path
+                android:pathData="M48,70 L48,60 Q48,46 62,46"
+                android:strokeColor="#FFFFFF"
+                android:strokeLineCap="round"
+                android:strokeWidth="8" />
+        </group>
+    </group>
+</vector>

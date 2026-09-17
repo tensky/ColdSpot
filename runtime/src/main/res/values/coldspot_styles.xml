@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The platform's own theme, no action bar: the screens bring their bar, so that the window's insets are theirs to handle. -->
+    <style name="coldspot_Theme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/coldspot_surface</item>
+        <item name="android:colorAccent">@color/coldspot_ink</item>
+        <item name="android:textColorPrimary">@color/coldspot_on_surface</item>
+        <item name="android:textColorSecondary">@color/coldspot_on_surface_dim</item>
+    </style>
+
+    <!-- Text sizes are sp and no height is fixed: at a font scale of 1.3 rows grow, nothing is cut. -->
+    <style name="coldspot_Text">
+        <item name="android:textColor">@color/coldspot_on_surface</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="coldspot_Text.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="coldspot_Text.Name">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="coldspot_Text.Dim">
+        <item name="android:textColor">@color/coldspot_on_surface_dim</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="coldspot_Text.Mono">
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="coldspot_Text.Mono.Dim">
+        <item name="android:textColor">@color/coldspot_on_surface_dim</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- A button that is an icon: 48 dp to touch, whatever the icon's size. -->
+    <style name="coldspot_IconButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:scaleType">center</item>
+    </style>
+</resources>

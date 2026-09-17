@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The screens, dark. -->
+    <color name="coldspot_surface">#131314</color>
+    <color name="coldspot_surface_high">#28292C</color>
+    <color name="coldspot_on_surface">#E8EAED</color>
+    <color name="coldspot_on_surface_dim">#A8ACB3</color>
+    <color name="coldspot_outline">#44474B</color>
+    <color name="coldspot_executed">#81C995</color>
+    <color name="coldspot_partial">#FDD663</color>
+    <color name="coldspot_not_executed">#F28B82</color>
+    <color name="coldspot_neutral">#A8ACB3</color>
+    <color name="coldspot_error">#D7AEFB</color>
+    <color name="coldspot_executed_background">#14301F</color>
+    <color name="coldspot_partial_background">#3A2F0B</color>
+    <color name="coldspot_not_executed_background">#3F1D1A</color>
+    <color name="coldspot_neutral_background">#28292C</color>
+    <color name="coldspot_error_background">#33203F</color>
+</resources>

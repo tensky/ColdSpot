@@ -1,0 +1,30 @@
+{
+    "schemaVersion": 8,
+    "module": "feature",
+    "files": [
+        {
+            "path": "feature/src/main/kotlin/id/tensky/coldspot/feature/FeatureScreen.kt",
+            "classes": [
+                "id/tensky/coldspot/feature/FeatureScreenKt"
+            ],
+            "blindLines": [],
+            "previews": []
+        },
+        {
+            "path": "feature/src/main/kotlin/id/tensky/coldspot/feature/Greeter.kt",
+            "classes": [
+                "id/tensky/coldspot/feature/Greeter"
+            ],
+            "blindLines": [],
+            "previews": []
+        },
+        {
+            "path": "feature/src/main/kotlin/id/tensky/coldspot/feature/Pricing.kt",
+            "classes": [
+                "id/tensky/coldspot/feature/Pricing"
+            ],
+            "blindLines": [],
+            "previews": []
+        }
+    ]
+}
