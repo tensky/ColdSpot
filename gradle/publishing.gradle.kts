@@ -1,14 +1,17 @@
-// The POM every published ColdSpot artifact carries, and signing when there is a key. Applied, after `maven-publish` and
-// `signing`, by tooling's plugin and manifest and by the main build's runtime. No repository is declared anywhere:
-// nothing is uploaded; `publishToMavenLocal` is the one place these publications go until publishing is settled.
-//
-// TODO(publishing): the project's home page and SCM location, and the developer entry are still to be decided; every
-// placeholder below says so. Maven Central refuses a POM without them.
+// What every published ColdSpot artifact shares, applied after `maven-publish` and `signing` by tooling's plugin and
+// manifest and by the main build's runtime: the POM's project metadata, on every MavenPublication of theirs, the Gradle
+// plugin's marker included (each module names and describes its own); a README in every javadoc jar; the repository a
+// Maven Central bundle is staged in; and signing, when a key is at hand. Nothing is uploaded from here: the bundle is
+// zipped by testbeds/central-bundle.sh and uploaded by hand (testbeds/RELEASING.md).
+
+// The repository's root: the main build's settings directory, or the tooling build's parent.
+val repoRoot: File = layout.settingsDirectory.asFile.let { dir -> if (dir.resolve("gradle/publishing.gradle.kts").isFile) dir else dir.parentFile }
 
 configure<PublishingExtension> {
     publications.withType<MavenPublication>().configureEach {
         pom {
-            url.set("TODO(publishing): the project's home page")
+            url.set("https://github.com/tensky/coldspot")
+            inceptionYear.set("2026")
             licenses {
                 license {
                     name.set("The Apache License, Version 2.0")
@@ -17,23 +20,42 @@ configure<PublishingExtension> {
             }
             developers {
                 developer {
-                    id.set("TODO(publishing): developer id")
-                    name.set("TODO(publishing): developer or organisation name")
+                    id.set("tensky")
+                    name.set("tensky")
+                    url.set("https://github.com/tensky")
                 }
             }
             scm {
-                url.set("TODO(publishing): the repository's URL")
-                connection.set("TODO(publishing): scm:git:<read-only URL>")
-                developerConnection.set("TODO(publishing): scm:git:<read-write URL>")
+                url.set("https://github.com/tensky/coldspot")
+                connection.set("scm:git:https://github.com/tensky/coldspot.git")
+                developerConnection.set("scm:git:ssh://git@github.com/tensky/coldspot.git")
             }
+        }
+    }
+    repositories {
+        // A Maven Central bundle, staged as a plain file repository, which makes maven-publish write the .md5 and .sha1
+        // of every file. Both builds stage into this one; testbeds/central-bundle.sh checks it and zips it.
+        maven {
+            name = "centralStaging"
+            url = uri(repoRoot.resolve("build/central-staging"))
         }
     }
 }
 
-// Signed only with a key at hand, as Gradle properties (for example ORG_GRADLE_PROJECT_signingInMemoryKey in the
-// environment): every build without one, a local publishToMavenLocal included, publishes unsigned.
+// Maven Central asks every jar and AAR for a javadoc jar. ColdSpot's documentation is its repository, so each javadoc
+// jar carries a README that points there: beside the API pages AGP generates for the runtime, alone in the others.
+val javadocReadme = repoRoot.resolve("gradle/javadoc-README.md")
+tasks.configureEach {
+    if (name == "javadocJar" || name == "javaDocReleaseJar") (this as AbstractCopyTask).from(javadocReadme) { rename { "README.md" } }
+}
+
+// Signed with a key at hand, as Gradle properties: ORG_GRADLE_PROJECT_signingInMemoryKey (the ASCII-armoured secret
+// key), ORG_GRADLE_PROJECT_signingInMemoryKeyId and ORG_GRADLE_PROJECT_signingInMemoryKeyPassword in the environment.
+// Without one, a build still publishes, unsigned, anywhere but the Central staging repository: publishToMavenLocal, for
+// one, as the consumer check does.
 val signingKey = providers.gradleProperty("signingInMemoryKey")
-if (signingKey.isPresent) {
+val signingKeyGiven = signingKey.isPresent
+if (signingKeyGiven) {
     configure<SigningExtension> {
         useInMemoryPgpKeys(
             providers.gradleProperty("signingInMemoryKeyId").orNull,
@@ -41,5 +63,23 @@ if (signingKey.isPresent) {
             providers.gradleProperty("signingInMemoryKeyPassword").orNull,
         )
         sign(the<PublishingExtension>().publications)
+    }
+}
+
+// A bundle for Maven Central is never staged unsigned: without a key, publishing there fails before writing anything.
+// The tasks are told apart by name (publish<Publication>PublicationToCentralStagingRepository): a task's repository is
+// not kept in the configuration cache, so it cannot be asked while the task runs.
+if (!signingKeyGiven) {
+    tasks.withType<PublishToMavenRepository>().configureEach {
+        if (name.endsWith("ToCentralStagingRepository")) {
+            val task = path
+            doFirst {
+                throw GradleException(
+                    "ColdSpot: no signing key, so nothing is staged for Maven Central ($task). Set " +
+                        "ORG_GRADLE_PROJECT_signingInMemoryKey, ORG_GRADLE_PROJECT_signingInMemoryKeyId and " +
+                        "ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: see testbeds/RELEASING.md.",
+                )
+            }
+        }
     }
 }

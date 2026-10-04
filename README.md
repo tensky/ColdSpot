@@ -16,7 +16,7 @@ Studio.
   some of it or can't tell, red none of it.
 - Keeps coverage across launches and rebuilds, and shares a text summary for a pull request or a
   ticket.
-- Stays out of debug and release builds, and never crashes the app it runs in.
+- Stays out of debug and release builds.
 
 ## Requirements
 

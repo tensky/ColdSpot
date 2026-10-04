@@ -2,6 +2,7 @@ import org.gradle.api.artifacts.result.ResolvedComponentResult
 import org.gradle.api.artifacts.result.ResolvedDependencyResult
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import java.util.zip.ZipFile
 
 // The manifest: the JSON the build writes into the APK and the runtime reads on the device, with its codec and
 // the rule that joins the modules' manifests. Consumed by the plugin here and by the Android runtime in the
@@ -73,14 +74,37 @@ val checkRuntimeClasspath by tasks.registering {
     }
 }
 
+// ColdSpot's license inside the jar, under META-INF/coldspot/, where no other library puts anything of its own.
+tasks.processResources {
+    from(layout.settingsDirectory.file("../LICENSE")) { into("META-INF/coldspot") }
+}
+
+/** Fails `check` when the jar lacks ColdSpot's LICENSE at META-INF/coldspot/LICENSE, as the repository has it. */
+val checkJar by tasks.registering {
+    group = "verification"
+    description = "Fails when the manifest jar lacks ColdSpot's LICENSE at META-INF/coldspot/LICENSE."
+    val jar = tasks.jar.flatMap { it.archiveFile }
+    inputs.file(jar)
+    val license = layout.settingsDirectory.file("../LICENSE")
+    inputs.file(license)
+    doLast {
+        ZipFile(jar.get().asFile).use { zip ->
+            val licenses = zip.entries().asSequence().filter { it.name == "META-INF/coldspot/LICENSE" }.toList()
+            check(licenses.size == 1 && zip.getInputStream(licenses.single()).readBytes().contentEquals(license.asFile.readBytes())) {
+                "the manifest jar must hold ColdSpot's LICENSE once, at META-INF/coldspot/LICENSE, as the repository's: it holds ${licenses.size}"
+            }
+        }
+    }
+}
+
 tasks.check {
-    dependsOn(checkRuntimeClasspath)
+    dependsOn(checkRuntimeClasspath, checkJar)
 }
 
 // io.github.tensky.coldspot:manifest, with its sources and javadoc (see gradle/publishing.gradle.kts).
 java {
     withSourcesJar()
-    withJavadocJar() // TODO(publishing): real API docs need Dokka; until then this is javadoc's, which Kotlin gives nothing
+    withJavadocJar() // javadoc finds nothing in Kotlin sources: the jar holds a README pointing to the project instead
 }
 publishing {
     publications {
@@ -88,8 +112,8 @@ publishing {
             from(components["java"])
             artifactId = "manifest"
             pom {
-                name.set("ColdSpot manifest")
-                description.set("The manifest ColdSpot's build writes into the APK and its runtime reads: the model, its JSON codec, and the rule that joins the modules' manifests.")
+                name.set("ColdSpot Manifest")
+                description.set("Manifest model and JSON codec shared by ColdSpot's Gradle plugin and runtime.")
             }
         }
     }

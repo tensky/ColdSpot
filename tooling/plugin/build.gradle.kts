@@ -49,13 +49,17 @@ sourceSets.main {
     resources.srcDir(generateVersionResource)
 }
 
+// The plugin's description, the same in its declaration and in its POM.
+val pluginDescription =
+    "Diffs your branch against a base, instruments the changed classes and ships them for ColdSpot's in-app view of executed lines."
+
 gradlePlugin {
     plugins {
         create("coldspot") {
             id = "io.github.tensky.coldspot"
             implementationClass = "id.tensky.coldspot.plugin.ColdSpotPlugin"
             displayName = "ColdSpot"
-            description = "Shows, inside a debug build of an Android app, which lines changed against a base git ref and which of them have executed."
+            description = pluginDescription
         }
     }
 }
@@ -192,10 +196,14 @@ tasks.shadowJar {
 tasks.jar {
     archiveClassifier.set("plain")
 }
+// ColdSpot's license inside the jar, under META-INF/coldspot/, where no other library puts anything of its own.
+tasks.processResources {
+    from(layout.settingsDirectory.file("../LICENSE")) { into("META-INF/coldspot") }
+}
 
 java {
     withSourcesJar()
-    withJavadocJar() // TODO(publishing): real API docs need Dokka; until then this is javadoc's, which Kotlin gives nothing
+    withJavadocJar() // javadoc finds nothing in Kotlin sources: the jar holds a README pointing to the project instead
 }
 tasks.named<Jar>("sourcesJar") {
     // Everything of ColdSpot's own that is in the shaded jar: diff, bundle and manifest too.
@@ -210,8 +218,8 @@ tasks.named<Jar>("sourcesJar") {
 }
 publishing.publications.withType<MavenPublication>().matching { it.name == "pluginMaven" }.configureEach {
     pom {
-        name.set("ColdSpot Gradle plugin")
-        description.set("The build side of ColdSpot: diffs against the base, instruments the changed classes, and bundles them for the runtime.")
+        name.set("ColdSpot Gradle Plugin")
+        description.set(pluginDescription)
     }
 }
 apply(from = layout.settingsDirectory.file("../gradle/publishing.gradle.kts"))
@@ -232,10 +240,23 @@ val checkNotices by tasks.registering {
         visit(root)
         seen.filter { !it.startsWith("project ") && !it.startsWith("org.jetbrains") && !it.startsWith("org.slf4j:") }.sorted()
     }
+    val jacoco = libs.versions.jacoco.get()
+    inputs.property("jacoco", jacoco)
     doLast {
         val text = notices.asFile.readText()
         val missing = shaded.get().filter { it !in text }
         check(missing.isEmpty()) { "THIRD-PARTY-NOTICES.txt does not name ${missing.joinToString()}: the shaded jar holds them" }
+        // jacoco-core is EPL-2.0: distributed in object code, its entry says where its source is, and that it was relocated.
+        val entry = text.split(Regex("\n\\s*\n")).firstOrNull { "org.jacoco:org.jacoco.core:$jacoco" in it }.orEmpty().replace(Regex("\\s+"), " ")
+        val unsaid = listOf(
+            "Its source code is available under the EPL-2.0",
+            "https://github.com/jacoco/jacoco/tree/v$jacoco",
+            "https://repo1.maven.org/maven2/org/jacoco/org.jacoco.core/$jacoco/org.jacoco.core-$jacoco-sources.jar",
+            "relocated under id.tensky.coldspot.shaded",
+        ).filter { it !in entry }
+        check(unsaid.isEmpty()) {
+            "THIRD-PARTY-NOTICES.txt: the entry of jacoco-core $jacoco (EPL-2.0) must say where its source is and that its classes are relocated; it lacks: ${unsaid.joinToString(" | ")}"
+        }
     }
 }
 
@@ -245,6 +266,8 @@ val checkShadedJar by tasks.registering {
     description = "Fails when the plugin's shaded jar holds a class that is neither ColdSpot's nor relocated under $shadedPrefix."
     val jar = tasks.shadowJar.flatMap { it.archiveFile }
     inputs.file(jar)
+    val license = layout.settingsDirectory.file("../LICENSE")
+    inputs.file(license)
     doLast {
         ZipFile(jar.get().asFile).use { zip ->
             val names = zip.entries().asSequence().map { it.name }.toList()
@@ -252,6 +275,10 @@ val checkShadedJar by tasks.registering {
             check(foreign.isEmpty()) { "the shaded jar holds classes outside id/tensky/coldspot: ${foreign.take(10)}" }
             check("META-INF/coldspot/THIRD-PARTY-NOTICES.txt" in names) { "the shaded jar has no META-INF/coldspot/THIRD-PARTY-NOTICES.txt" }
             check("META-INF/gradle-plugins/io.github.tensky.coldspot.properties" in names) { "the shaded jar has no plugin descriptor" }
+            val licenses = zip.entries().asSequence().filter { it.name == "META-INF/coldspot/LICENSE" }.toList()
+            check(licenses.size == 1 && zip.getInputStream(licenses.single()).readBytes().contentEquals(license.asFile.readBytes())) {
+                "the shaded jar must hold ColdSpot's LICENSE once, at META-INF/coldspot/LICENSE, as the repository's: it holds ${licenses.size}"
+            }
         }
     }
 }

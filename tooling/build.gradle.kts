@@ -19,3 +19,11 @@ tasks.register("slowTest") {
     description = "Runs the tests too slow for `test`; see the plugin module."
     dependsOn(":plugin:slowTest")
 }
+
+// This build's part of the Maven Central bundle (gradle/publishing.gradle.kts, testbeds/central-bundle.sh): the plugin,
+// its marker and the manifest, signed. The main build's own publishToCentralStaging stages the runtime.
+tasks.register("publishToCentralStaging") {
+    group = "publishing"
+    description = "Publishes the plugin, its marker and the manifest, signed, to <repo root>/build/central-staging."
+    dependsOn(":plugin:publishAllPublicationsToCentralStagingRepository", ":manifest:publishAllPublicationsToCentralStagingRepository")
+}

@@ -1,6 +1,6 @@
 [versions]
 # ColdSpot itself: the plugin, the manifest module and the runtime share one version; the plugin adds the runtime at its own.
-coldspot = "0.1.0"
+coldspot = "0.1.0-alpha01"
 agp = "9.3.2"
 coreKtx = "1.19.0"
 junit = "4.13.2"

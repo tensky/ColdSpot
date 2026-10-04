@@ -25,3 +25,11 @@ tasks.register("slowTest") {
     description = "Runs the tooling build's slow tests, which `test` and `check` leave out."
     dependsOn(tooling.task(":slowTest"))
 }
+
+// This build's part of the Maven Central bundle (gradle/publishing.gradle.kts, testbeds/central-bundle.sh): the runtime,
+// signed. The tooling build's own publishToCentralStaging stages the rest.
+tasks.register("publishToCentralStaging") {
+    group = "publishing"
+    description = "Publishes the runtime, signed, to <repo root>/build/central-staging for the Maven Central bundle."
+    dependsOn(":runtime:publishAllPublicationsToCentralStagingRepository")
+}

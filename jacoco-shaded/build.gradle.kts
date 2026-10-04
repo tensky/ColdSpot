@@ -47,10 +47,23 @@ val checkNotices by tasks.registering {
         visit(root)
         seen.sorted()
     }
+    val jacoco = libs.versions.jacoco.get()
+    inputs.property("jacoco", jacoco)
     doLast {
         val text = notices.asFile.readText()
         val missing = shaded.get().filter { it !in text }
         check(missing.isEmpty()) { "THIRD-PARTY-NOTICES.txt does not name ${missing.joinToString()}: the shaded jar holds them" }
+        // jacoco-core is EPL-2.0: distributed in object code, its entry says where its source is, and that it was relocated.
+        val entry = text.split(Regex("\n\\s*\n")).firstOrNull { "org.jacoco:org.jacoco.core:$jacoco" in it }.orEmpty().replace(Regex("\\s+"), " ")
+        val unsaid = listOf(
+            "Its source code is available under the EPL-2.0",
+            "https://github.com/jacoco/jacoco/tree/v$jacoco",
+            "https://repo1.maven.org/maven2/org/jacoco/org.jacoco.core/$jacoco/org.jacoco.core-$jacoco-sources.jar",
+            "relocated under id.tensky.coldspot.shaded",
+        ).filter { it !in entry }
+        check(unsaid.isEmpty()) {
+            "THIRD-PARTY-NOTICES.txt: the entry of jacoco-core $jacoco (EPL-2.0) must say where its source is and that its classes are relocated; it lacks: ${unsaid.joinToString(" | ")}"
+        }
     }
 }
 

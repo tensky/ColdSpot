@@ -199,6 +199,8 @@ val checkAar by tasks.registering {
     val aar = layout.buildDirectory.file("outputs/aar/runtime-release.aar")
     dependsOn("bundleReleaseAar")
     inputs.file(aar)
+    val license = layout.settingsDirectory.file("LICENSE")
+    inputs.file(license)
     doLast {
         val names = ArrayList<String>()
         ZipFile(aar.get().asFile).use { zip ->
@@ -217,11 +219,25 @@ val checkAar by tasks.registering {
         check(names.any { it.endsWith("!/id/tensky/coldspot/shaded/org/jacoco/core/analysis/Analyzer.class") }) { "the AAR lacks the relocated Analyzer: ${names.filter { "libs/" in it }.take(5)}" }
         check(names.any { it.endsWith("!/id/tensky/coldspot/shaded/org/jacoco/core/jacoco.properties") }) { "the AAR lacks JaCoCo's relocated version resource" }
         check(names.any { it.endsWith("!/META-INF/coldspot/THIRD-PARTY-NOTICES.txt") }) { "the AAR lacks META-INF/coldspot/THIRD-PARTY-NOTICES.txt" }
+        val licensed = ZipFile(aar.get().asFile).use { zip ->
+            zip.getEntry("META-INF/coldspot/LICENSE")?.let { zip.getInputStream(it).readBytes().contentEquals(license.asFile.readBytes()) } == true
+        }
+        check(licensed) { "the AAR must hold ColdSpot's LICENSE at META-INF/coldspot/LICENSE, as the repository's" }
+        check("classes.jar!/META-INF/coldspot/LICENSE" !in names) {
+            "the AAR's classes.jar holds META-INF/coldspot/LICENSE: an app gets the manifest module's copy at that path too, and fails to package two"
+        }
     }
 }
 
 tasks.named("check") {
     dependsOn(checkRuntimeClasspath, checkAar)
+}
+
+// ColdSpot's license at META-INF/coldspot/LICENSE in the AAR itself, not in its classes.jar: an app's classpath gets the
+// manifest module's copy at that path, and a second one would fail its packaging ("2 files found with path"). AGP takes
+// nothing from an AAR's top level into an app.
+tasks.configureEach {
+    if (name == "bundleReleaseAar") (this as AbstractCopyTask).from(layout.settingsDirectory.file("LICENSE")) { into("META-INF/coldspot") }
 }
 
 // io.github.tensky.coldspot:runtime, the release AAR with its sources and javadoc (see gradle/publishing.gradle.kts).
@@ -240,8 +256,8 @@ afterEvaluate {
                 from(components["release"])
                 artifactId = "runtime"
                 pom {
-                    name.set("ColdSpot runtime")
-                    description.set("The on-device side of ColdSpot: reads JaCoCo's agent, keeps coverage across builds, and shows which changed lines executed.")
+                    name.set("ColdSpot Runtime")
+                    description.set("In-app runtime for ColdSpot: shows, inside a debug build, which changed lines have executed.")
                 }
             }
         }

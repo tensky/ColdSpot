@@ -45,7 +45,11 @@ inherited from a parent), where its source is, and the notices it ships. The ful
   License: EPL-2.0 (https://www.eclipse.org/legal/epl-2.0/), declared by its parent POM
   org.jacoco:org.jacoco.build:0.8.14
   Copyright (c) 2009, 2025 Mountainminds GmbH & Co. KG and Contributors.
-  Source, as the EPL asks of a distribution in object code: https://github.com/jacoco/jacoco/tree/v0.8.14
+  Its source code is available under the EPL-2.0, as the EPL asks of a distribution in object code: at the tag
+  v0.8.14 of JaCoCo's repository, https://github.com/jacoco/jacoco/tree/v0.8.14, and as its sources jar on Maven
+  Central, https://repo1.maven.org/maven2/org/jacoco/org.jacoco.core/0.8.14/org.jacoco.core-0.8.14-sources.jar.
+  Its classes in this artifact are relocated under id.tensky.coldspot.shaded: the package org.jacoco.core is
+  renamed id.tensky.coldspot.shaded.org.jacoco.core.
 
 
 ====================================================================================================
