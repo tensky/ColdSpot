@@ -89,8 +89,8 @@ ColdSpot has already instrumented.
 
 These fail the build while the coverage variant's `coldSpotBundle` task runs. Every refusal of a
 shallow clone begins with `shallow clone detected`. Whatever the case, ColdSpot never fetches and
-never writes `.git`: the fix is always for you, or your CI's checkout, to make. [CI](ci.md) shows the
-checkouts each CI system makes.
+never writes `.git`: the fix is always for you, or your CI's checkout, to make.
+[CI builds (not yet confirmed)](ci.md) has set-ups to try.
 
 ### No git repository
 
@@ -114,7 +114,7 @@ at <sha>: fetch the full history too (e.g. fetch-depth: 0).`
 CI, ColdSpot does not take `origin/HEAD` or guess: either could name the wrong branch for a pull
 request.
 **Fix.** Pass the pull request's target branch, `-Pcoldspot.base=origin/<target>`; see
-[CI](ci.md#on-ci-the-base-must-be-given).
+[CI builds (not yet confirmed)](ci.md).
 
 ### No base to compare with
 
@@ -412,6 +412,7 @@ Under the tag `ColdSpot`:
 
 ## Installing
 
-**`INSTALL_FAILED_UPDATE_INCOMPATIBLE`** when installing a CI build over a local one, or the other way
-round: the two were signed with different debug keys. Uninstalling first also deletes the coverage
-saved so far. Share one debug keystore: see [Signing](ci.md#signing).
+**`INSTALL_FAILED_UPDATE_INCOMPATIBLE`** when installing a build made on another machine over a local
+one, or the other way round: the two were signed with different debug keys. Uninstalling first also
+deletes the coverage saved so far. Share one debug keystore: commit it, and point the `debug` signing
+config at it. The coverage build type ColdSpot creates is made from `debug`, signing included.

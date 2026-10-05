@@ -115,9 +115,8 @@ Every setting, the Gradle properties, the runtime API and the adb broadcasts are
 
 ## CI
 
-On CI (`CI=true`), give the base and the full history: `fetch-depth: 0` and
-`-Pcoldspot.base=origin/<target branch>`, or the build fails, saying what to fetch or pass. See
-[Using ColdSpot in CI](docs/ci.md).
+Not confirmed yet: ColdSpot has not been run on a real CI service. What a CI build needs, and
+set-ups to try, are in [CI builds (not yet confirmed)](docs/ci.md).
 
 ## Limitations
 
