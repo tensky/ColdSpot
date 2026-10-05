@@ -1,7 +1,7 @@
 # Configuration
 
 Everything ColdSpot can be told, and every way to reach it from outside the app. The
-[README](../README.md#configuration) has the same settings in one short table.
+[README](../README.md#configuration) has a short example of the `coldSpot` block.
 
 - [The coverage build type](#the-coverage-build-type)
 - [The coldSpot block](#the-coldspot-block)
