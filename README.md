@@ -71,6 +71,24 @@ Studio and run the app, or:
 **To see something, build a change:** on a feature branch, or with
 `-Pcoldspot.base=<an older commit>`. On a main that was just pushed there is nothing to show.
 
+## A working example
+
+[tensky/nowinandroid-coldspot-demo](https://github.com/tensky/nowinandroid-coldspot-demo) is a fork of Google's Now in Android
+with ColdSpot set up from Maven Central, to try ColdSpot without touching an app of your own and to
+see the set-up in a real multi-module build:
+
+```
+git clone https://github.com/tensky/nowinandroid-coldspot-demo.git
+cd nowinandroid-coldspot-demo
+./gradlew :app:assembleDemoCoverage
+./gradlew :app:installDemoCoverage
+```
+
+- [The set-up](https://github.com/android/nowinandroid/compare/main...tensky:nowinandroid:coldspot-base)
+  is one commit on top of Now in Android.
+- [The changed lines](https://github.com/tensky/nowinandroid/compare/coldspot-base...main) that
+  ColdSpot shows there are what the fork's `main` adds to its `coldspot-base` branch.
+
 ## The coverage build
 
 ColdSpot lives in a build type of its own, `coverage`, which the plugin adds to every module it is
